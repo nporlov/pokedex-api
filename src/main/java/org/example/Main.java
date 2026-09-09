@@ -14,7 +14,7 @@ public class Main {
         String command = null;
         String url = null;
 
-        // check for empty input
+        // CHECK FOR EMPTY INPUT
         try {
             command = args[0];
         } catch (IndexOutOfBoundsException e) {
@@ -35,7 +35,8 @@ public class Main {
                             .build();
                     HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
                     ObjectMapper mapper = new ObjectMapper();
-                    // System.out.println(mapper.readValue(response.body(), Object.class));
+                    Pokemon pokemon = mapper.readValue(response.body(), Pokemon.class);
+                    pokemon.printBasicInfo();
                     break;
                 }
                 default: System.out.println("Unknown command: " + command);
@@ -43,6 +44,5 @@ public class Main {
         } catch (IOException | InterruptedException e) {
             System.err.println("Error sending request.");
         }
-
     }
 }
