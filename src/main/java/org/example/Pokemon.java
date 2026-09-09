@@ -2,6 +2,7 @@ package org.example;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,8 @@ public class Pokemon {
     private int weight;
     @JsonProperty ("is_default") private boolean isDefault;
     private int order;
-    private List<Ability> abilities;
+    @JsonProperty("abilities")
+    private List<JsonNode> abilitiesJson;
 
     // GETTERS
     public String getName() { return name; }
@@ -27,7 +29,14 @@ public class Pokemon {
     public int getBaseExperience() { return baseExperience; }
     public int getHeight() { return height; }
     public int getWeight() { return weight; }
-    public List<Ability> getAbilities() { return abilities; }
+    public List<Ability> getAbilities() {
+        List<Ability> abilities = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        for (JsonNode abilityJson: abilitiesJson) {
+            abilities.add(mapper.readValue(abilityJson.toString(),  Ability.class));
+        }
+        return abilities;
+    }
 
     // SETTERS
     public void setName(String name) { this.name = name; }
@@ -37,12 +46,11 @@ public class Pokemon {
     public void setBaseExperience(int baseExperience) { this.baseExperience = baseExperience; }
     public void setHeight(int height) { this.height = height; }
     public void setWeight(int weight) { this.weight = weight; }
-    public void setAbilities(List<Ability> abilities) { this.abilities = abilities; }
 
     public void printBasicInfo () {
-        System.out.println("ID:\t\t\t" + id);
-        System.out.println("Name:\t\t" + name);
-        System.out.println("Height:\t\t" + height);
-        System.out.println("Weight:\t\t" + weight);
+        System.out.println("ID:\t\t\t" + getId());
+        System.out.println("Name:\t\t" + getName());
+        System.out.println("Height:\t\t" + getHeight());
+        System.out.println("Weight:\t\t" + getWeight());
     }
 }
