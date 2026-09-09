@@ -1,17 +1,48 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+import tools.jackson.databind.ObjectMapper;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+
+public class Main {
+    static void main(String[] args) {
+        String command = null;
+        String url = null;
+
+        // check for empty input
+        try {
+            command = args[0];
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("No command entered. " + e);
         }
+        try {
+            url = args[1];
+        }  catch (IndexOutOfBoundsException e) {
+            System.err.println("No URL entered. " + e);
+        }
+
+        try {
+            switch (command) {
+                case "get": {
+                    HttpClient client = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create(url))
+                            .build();
+                    HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+                    ObjectMapper mapper = new ObjectMapper();
+                    // System.out.println(mapper.readValue(response.body(), Object.class));
+                    break;
+                }
+                default: System.out.println("Unknown command: " + command);
+            }
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error sending request.");
+        }
+
     }
 }
