@@ -12,7 +12,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 public class Main {
     static void main(String[] args) {
         String command = null;
-        String url = null;
+        String parameter = null;
+        String url = "https://pokeapi.co/api/v2/";
 
         // CHECK FOR EMPTY INPUT
         try {
@@ -21,22 +22,29 @@ public class Main {
             System.err.println("No command entered. " + e);
         }
         try {
-            url = args[1];
+            parameter = args[1];
         }  catch (IndexOutOfBoundsException e) {
-            System.err.println("No URL entered. " + e);
+            System.err.println("No name or id entered. " + e);
         }
 
         try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url + command + "/" + parameter))
+                    .build();
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            ObjectMapper mapper = new ObjectMapper();
             switch (command) {
-                case "get": {
-                    HttpClient client = HttpClient.newHttpClient();
-                    HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create(url))
-                            .build();
-                    HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-                    ObjectMapper mapper = new ObjectMapper();
-                    Pokemon pokemon = mapper.readValue(response.body(), Pokemon.class);
+                case "pokemon": {
+                    Pokemon pokemon;
+                    pokemon = mapper.readValue(response.body(), Pokemon.class);
                     pokemon.printBasicInfo();
+                    break;
+                }
+                case "ability": {
+                    Ability ability;
+                    ability = mapper.readValue(response.body(), Ability.class);
+                    ability.printBasicInfo();
                     break;
                 }
                 default: System.out.println("Unknown command: " + command);
