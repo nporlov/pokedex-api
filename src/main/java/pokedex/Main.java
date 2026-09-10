@@ -23,6 +23,13 @@ public class Main {
             System.err.println("No name or id entered.");
         }
 
+        // CHECK FOR VALID COMMAND
+        try {
+            DependencyContainer.getInputValidator().validateUserCommand(command);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(Properties.url + command + "/" + parameter))
