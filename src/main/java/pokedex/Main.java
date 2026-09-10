@@ -1,10 +1,7 @@
 package pokedex;
 
-import tools.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -27,22 +24,23 @@ public class Main {
         }
 
         try {
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(Properties.url + command + "/" + parameter))
                     .build();
-            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-            ObjectMapper mapper = new ObjectMapper();
+            HttpResponse<String> response = DependencyContainer.getHttpClient()
+                    .send(request, BodyHandlers.ofString());
             switch (command) {
                 case "pokemon": {
                     Pokemon pokemon;
-                    pokemon = mapper.readValue(response.body(), Pokemon.class);
+                    pokemon = DependencyContainer.getObjectMapper()
+                            .readValue(response.body(), Pokemon.class);
                     pokemon.printBasicInfo();
                     break;
                 }
                 case "ability": {
                     Ability ability;
-                    ability = mapper.readValue(response.body(), Ability.class);
+                    ability = DependencyContainer.getObjectMapper()
+                            .readValue(response.body(), Ability.class);
                     ability.printBasicInfo();
                     break;
                 }
