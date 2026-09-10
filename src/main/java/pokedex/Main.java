@@ -1,4 +1,4 @@
-package org.example;
+package pokedex;
 
 import tools.jackson.databind.ObjectMapper;
 
@@ -13,24 +13,23 @@ public class Main {
     static void main(String[] args) {
         String command = null;
         String parameter = null;
-        String url = "https://pokeapi.co/api/v2/";
 
         // CHECK FOR EMPTY INPUT
         try {
             command = args[0];
         } catch (IndexOutOfBoundsException e) {
-            System.err.println("No command entered. " + e);
+            System.err.println("No command entered.");
         }
         try {
             parameter = args[1];
         }  catch (IndexOutOfBoundsException e) {
-            System.err.println("No name or id entered. " + e);
+            System.err.println("No name or id entered.");
         }
 
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url + command + "/" + parameter))
+                    .uri(URI.create(Properties.url + command + "/" + parameter))
                     .build();
             HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
             ObjectMapper mapper = new ObjectMapper();

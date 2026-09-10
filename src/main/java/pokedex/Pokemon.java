@@ -1,4 +1,4 @@
-package org.example;
+package pokedex;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import tools.jackson.databind.JsonNode;
