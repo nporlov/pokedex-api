@@ -31,8 +31,7 @@ public class Main {
                     .send(request, BodyHandlers.ofString());
             switch (command) {
                 case "pokemon": {
-                    Pokemon pokemon;
-                    pokemon = DependencyContainer.getObjectMapper()
+                    Pokemon pokemon = DependencyContainer.getObjectMapper()
                             .readValue(response.body(), Pokemon.class);
                     pokemon.printBasicInfo();
                     break;
