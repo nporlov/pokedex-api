@@ -4,5 +4,4 @@ out/
 .idea/libraries
 .idea/vcs.xml
 pokedex-api.iml
-pom.xml
 /src/main/resources/
