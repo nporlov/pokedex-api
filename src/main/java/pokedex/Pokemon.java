@@ -48,11 +48,21 @@ public class Pokemon {
     public void setWeight(int weight) { this.weight = weight; }
 
     public String toString() {
-        return String.format("""
+        return String.format ("""
                         ID:\t\t\t%d
                         Name:\t\t%s
                         Height:\t\t%d
-                        Weight:\t\t%d""",
-                this.getId(), this.getName(), this.getHeight(), this.getWeight());
+                        Weight:\t\t%d
+                        Is Default:\t%b
+                        Base EXP:\t%d
+                        Order:\t\t%d""",
+                this.getId(),
+                this.getName(),
+                this.getHeight(),
+                this.getWeight(),
+                this.isDefault(),
+                this.getBaseExperience(),
+                this.getOrder()
+        );
     }
 }

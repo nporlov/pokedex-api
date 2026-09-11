@@ -1,7 +1,6 @@
 package pokedex;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import tools.jackson.databind.annotation.JsonDeserialize;
 
 public class Ability {
     public Ability() {}
@@ -21,9 +20,13 @@ public class Ability {
     public void setMainSeries(boolean isMainSeries) { this.isMainSeries = isMainSeries; }
 
     public String toString() {
-        return String.format("""
+        return String.format ("""
                         ID:\t\t\t%d
-                        Name:\t\t%s""",
-                this.getId(), this.getName());
+                        Name:\t\t%s
+                        Is MS:\t\t%b""",
+                this.getId(),
+                this.getName(),
+                this.isMainSeries()
+        );
     }
 }
