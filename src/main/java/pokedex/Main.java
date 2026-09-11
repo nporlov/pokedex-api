@@ -36,21 +36,26 @@ public class Main {
                     .build();
             HttpResponse<String> response = DependencyContainer.getHttpClient()
                     .send(request, BodyHandlers.ofString());
-            switch (command) {
-                case "pokemon": {
-                    Pokemon pokemon = DependencyContainer.getObjectMapper()
-                            .readValue(response.body(), Pokemon.class);
-                    pokemon.printBasicInfo();
-                    break;
+            if (response.statusCode() == 200) {
+                switch (command) {
+                    case "pokemon": {
+                        Pokemon pokemon = DependencyContainer.getObjectMapper()
+                                .readValue(response.body(), Pokemon.class);
+                        pokemon.printBasicInfo();
+                        break;
+                    }
+                    case "ability": {
+                        Ability ability;
+                        ability = DependencyContainer.getObjectMapper()
+                                .readValue(response.body(), Ability.class);
+                        ability.printBasicInfo();
+                        break;
+                    }
+                    default: System.out.println("Unknown command: " + command);
                 }
-                case "ability": {
-                    Ability ability;
-                    ability = DependencyContainer.getObjectMapper()
-                            .readValue(response.body(), Ability.class);
-                    ability.printBasicInfo();
-                    break;
-                }
-                default: System.out.println("Unknown command: " + command);
+            }
+            else {
+                System.err.println("Server responded with error: " + response.statusCode());
             }
         } catch (IOException | InterruptedException e) {
             System.err.println("Error sending request.");
