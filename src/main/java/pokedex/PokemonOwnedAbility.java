@@ -14,4 +14,11 @@ public class PokemonOwnedAbility {
     public boolean  isHidden() {return isHidden;}
     public int getSlot() {return slot;}
     public Ability getAbility() {return ability;}
+
+    public String toString() {
+        if (this.isHidden()) {
+            return String.format("%s (hidden)", this.getAbility().getName());
+        }
+        return this.getAbility().getName();
+    }
 }

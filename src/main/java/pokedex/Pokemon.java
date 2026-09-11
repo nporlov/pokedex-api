@@ -1,11 +1,9 @@
 package pokedex;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pokemon {
     // EMPTY CONSTRUCTOR
@@ -41,21 +39,26 @@ public class Pokemon {
     public void setWeight(int weight) { this.weight = weight; }
 
     public String toString() {
+        String abilityString = this.getAbilities().stream()
+                .map(PokemonOwnedAbility::toString)
+                .collect(Collectors.joining(", "));
         return String.format ("""
                         ID:\t\t\t%d
                         Name:\t\t%s
                         Height:\t\t%d
                         Weight:\t\t%d
-                        Is Default:\t%b
+                        Default:\t%b
                         Base EXP:\t%d
-                        Order:\t\t%d""",
+                        Order:\t\t%d
+                        Abilities:\t%s""",
                 this.getId(),
                 this.getName(),
                 this.getHeight(),
                 this.getWeight(),
                 this.isDefault(),
                 this.getBaseExperience(),
-                this.getOrder()
+                this.getOrder(),
+                abilityString
         );
     }
 }
