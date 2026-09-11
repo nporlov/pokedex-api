@@ -19,7 +19,7 @@ public class Pokemon {
     @JsonProperty ("is_default") private boolean isDefault;
     private int order;
     @JsonProperty("abilities")
-    private List<JsonNode> abilitiesJson;
+    private List<PokemonOwnedAbility> abilities;
 
     // GETTERS
     public String getName() { return name; }
@@ -29,14 +29,7 @@ public class Pokemon {
     public int getBaseExperience() { return baseExperience; }
     public int getHeight() { return height; }
     public int getWeight() { return weight; }
-    public List<Ability> getAbilities() {
-        List<Ability> abilities = new ArrayList<>();
-        ObjectMapper mapper = new ObjectMapper();
-        for (JsonNode abilityJson: abilitiesJson) {
-            abilities.add(mapper.readValue(abilityJson.toString(),  Ability.class));
-        }
-        return abilities;
-    }
+    public List<PokemonOwnedAbility> getAbilities() { return abilities; }
 
     // SETTERS
     public void setName(String name) { this.name = name; }
