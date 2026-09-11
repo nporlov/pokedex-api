@@ -47,10 +47,12 @@ public class Pokemon {
     public void setHeight(int height) { this.height = height; }
     public void setWeight(int weight) { this.weight = weight; }
 
-    public void printBasicInfo () {
-        System.out.println("ID:\t\t\t" + getId());
-        System.out.println("Name:\t\t" + getName());
-        System.out.println("Height:\t\t" + getHeight());
-        System.out.println("Weight:\t\t" + getWeight());
+    public String toString() {
+        return String.format("""
+                        ID:\t\t\t%d
+                        Name:\t\t%s
+                        Height:\t\t%d
+                        Weight:\t\t%d""",
+                this.getId(), this.getName(), this.getHeight(), this.getWeight());
     }
 }

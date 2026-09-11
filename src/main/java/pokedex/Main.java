@@ -41,17 +41,17 @@ public class Main {
                     case "pokemon": {
                         Pokemon pokemon = DependencyContainer.getObjectMapper()
                                 .readValue(response.body(), Pokemon.class);
-                        pokemon.printBasicInfo();
+                        DependencyContainer.getInfoPrinter().printInfo(pokemon);
                         break;
                     }
                     case "ability": {
                         Ability ability;
                         ability = DependencyContainer.getObjectMapper()
                                 .readValue(response.body(), Ability.class);
-                        ability.printBasicInfo();
+                        DependencyContainer.getInfoPrinter().printInfo(ability);
                         break;
                     }
-                    default: System.out.println("Unknown command: " + command);
+                    default: System.err.println("Unknown command: " + command);
                 }
             }
             else {

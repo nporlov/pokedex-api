@@ -20,8 +20,10 @@ public class Ability {
     public void setId(int id) { this.id = id; }
     public void setMainSeries(boolean isMainSeries) { this.isMainSeries = isMainSeries; }
 
-    public void printBasicInfo() {
-        System.out.println("ID:\t\t" + id);
-        System.out.println("Name:\t" + name);
+    public String toString() {
+        return String.format("""
+                        ID:\t\t\t%d
+                        Name:\t\t%s""",
+                this.getId(), this.getName());
     }
 }
