@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>pokedex-api</artifactId>
+    <groupId>pokedex</groupId>
+    <artifactId>pokedex</artifactId>
     <version>1.0</version>
 
     <properties>
@@ -26,7 +26,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.Main</mainClass>
+                            <mainClass>pokedex.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
